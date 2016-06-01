@@ -83,6 +83,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	int pktp1;
 	int pktp2;
 	int tmp;
+	Osobnik o1, o2;
 	inicjalizacja();
 	
 	for (int k = 0; k < ITERACJE; k++){
@@ -94,7 +95,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		//cout << STL[i].przystosowanie<<endl;
 		//cout << "przystosowanie: " << STL[0].przystosowanie << endl;
 		
-
+		/*
 		for (int i = 0; i < esize; i++)
 		{
 			for (int j = 0; j < 22; j++)
@@ -130,7 +131,35 @@ int _tmain(int argc, _TCHAR* argv[])
 			i += 2;
 
 		}
-
+		*/
+		i1 = (rand() % WIELKOSCP);
+		i2 = (rand() % WIELKOSCP);
+			pktp1 = (rand() % 20 + 2);
+			pktp2 = (rand() % 20 + 2);
+			if (pktp1 >= pktp2) {
+				tmp = pktp1;
+				pktp1 = pktp2;
+				pktp2 = tmp;
+			}
+			for (int j = 0; j<pktp1; j++){
+				o1.chromosom[j] = STL[i1].chromosom[j];// + STL[i2].chromosom.substr(pktp, TEKST.length()-1);
+				o2.chromosom[j] = STL[i2].chromosom[j];//.substr(0, pktp) + STL[i1].chromosom.substr(pktp, TEKST.length());
+			}
+			for (int j = pktp1; j<pktp2; j++){
+				o1.chromosom[j] = STL[i2].chromosom[j];
+				o2.chromosom[j] = STL[i1].chromosom[j];
+			}
+			for (int j = pktp2; j < 22; j++){
+				o1.chromosom[j] = STL[i1].chromosom[j];
+				o2.chromosom[j] = STL[i2].chromosom[j];
+			}
+			if (rand() % 10 < PMUTACJI) mutuj(o1);
+			if (rand() % 10 < PMUTACJI) mutuj(o2);
+			
+			for (int i = 0; i < WIELKOSCP - 2; i++) STL2[i] = STL[i];
+			STL2[WIELKOSCP - 2] = o1;
+			STL2[WIELKOSCP - 1] = o2;
+			
 		swap(STL, STL2);
 	}
 	cout << rzeczywista(STL[0])<<endl;
