@@ -85,8 +85,8 @@ int _tmain(int argc, _TCHAR* argv[])
 			pktp2 = tmp;
 		}
 		for (int j = 0; j<pktp1; j++){
-			o1.chromosom[j] = STL[i1].chromosom[j];// + STL[i2].chromosom.substr(pktp, TEKST.length()-1);
-			o2.chromosom[j] = STL[i2].chromosom[j];//.substr(0, pktp) + STL[i1].chromosom.substr(pktp, TEKST.length());
+			o1.chromosom[j] = STL[i1].chromosom[j];
+			o2.chromosom[j] = STL[i2].chromosom[j];
 		}
 		for (int j = pktp1; j<pktp2; j++){
 			o1.chromosom[j] = STL[i2].chromosom[j];
