@@ -80,7 +80,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	int esize = WIELKOSCP*WELITARYZMU;
 	int i1;
 	int i2;
-	int pktp;
+	int pktp1;
+	int pktp2;
+	int tmp;
 	inicjalizacja();
 	
 	for (int k = 0; k < ITERACJE; k++){
@@ -104,14 +106,24 @@ int _tmain(int argc, _TCHAR* argv[])
 		{
 			i1 = (rand() % PODZBIOR);
 			i2 = (rand() % PODZBIOR);
-			pktp = (rand() % 20 + 2);
-			for(int j=0;j<pktp;j++){
+			pktp1 = (rand() % 20 + 2);
+			pktp2 = (rand() % 20 + 2);
+			if (pktp1 >= pktp2) {
+				tmp = pktp1;
+				pktp1 = pktp2;
+				pktp2 = tmp;
+			}
+			for(int j=0;j<pktp1;j++){
 			STL2[i].chromosom[j] = STL[i1].chromosom[j];// + STL[i2].chromosom.substr(pktp, TEKST.length()-1);
 			STL2[i + 1].chromosom[j] = STL[i2].chromosom[j];//.substr(0, pktp) + STL[i1].chromosom.substr(pktp, TEKST.length());
 			}
-			for(int j=pktp;j<22;j++){
+			for (int j = pktp1; j<pktp2; j++){
 				STL2[i].chromosom[j] = STL[i2].chromosom[j];
 				STL2[i + 1].chromosom[j] = STL[i1].chromosom[j];
+			}
+			for (int j = pktp2; j < 22; j++){
+				STL2[i].chromosom[j] = STL[i1].chromosom[j];
+				STL2[i + 1].chromosom[j] = STL[i2].chromosom[j];
 			}
 			if (rand() % 10 < PMUTACJI) mutuj(STL2[i]);
 			if (rand() % 10 < PMUTACJI) mutuj(STL2[i+1]);
