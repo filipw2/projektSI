@@ -9,10 +9,10 @@
 
 using namespace std;
 
-#define WIELKOSCP 512
-#define ITERACJE 400
-#define PMUTACJI 0.2
-#define DWA_22 4194304
+#define WIELKOSCP 512   //wielkosc populacji osobnikow
+#define ITERACJE 400	//ilosc iteracji programu
+#define PMUTACJI 0.2	//prawdopodobienstwo mutacji jednego chromosomu
+#define DWA_22 4194304	//2^22
 #define PI 3.14159265359
 class Osobnik{
 public:
@@ -23,13 +23,17 @@ public:
 vector<Osobnik> STL(WIELKOSCP);
 vector<Osobnik> STL2(WIELKOSCP);
 
-void inicjalizacja(){
+//inicjalizacja populacji osobnikow wypelniajac losowymi chromosomami
+
+void inicjalizacja(){	
 	for (int i = 0; i < WIELKOSCP; i++){
 		for (int j = 0; j < 22; j++) { 
 			STL[i].chromosom[j]= rand() % (2);
 		}
 	}
 }
+
+//zamiana liczby binarnej na dziesietna
 
 int btod(Osobnik &a){
 	int temp=1;
@@ -41,10 +45,15 @@ int btod(Osobnik &a){
 	return dziesietna;
 }
 
+//obliczanie odpowiedniej liczby rzeczywistej
+
 double rzeczywista(Osobnik &a)
 {
 	return -1.5+(4.0*btod(a))/(DWA_22-1.5);
 }
+
+//obliczanie przystosowania ktore jest wartoscia funkcji f(x)
+//szukamy minimum wiec im wartosc przystosowanie jest mniejsza tym lepiej
 
 void przystosowanie(Osobnik &a){
 	double x=rzeczywista(a);
@@ -53,10 +62,15 @@ void przystosowanie(Osobnik &a){
 	a.przystosowanie=wynik;
 }
 
+//zmiana pojedynczego chromosomu
+
 void mutuj(Osobnik &a){
 	int i=rand() %22;
 	a.chromosom[i]=rand() % (2);
 }
+
+//porownywanie przystosowania osobnikow
+//potrzebne do sortowania
 
 bool porownaj(Osobnik &a, Osobnik &b){
 	if (a.przystosowanie < b.przystosowanie) return true;
@@ -72,11 +86,14 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 	for (int k = 0; k < ITERACJE; k++){
 		for (int i = 0; i < WIELKOSCP; i++){
-			przystosowanie(STL[i]);
+			przystosowanie(STL[i]);			//obliczenie przystosowania
 		}
-		sort(STL.begin(), STL.end(), porownaj);
+		sort(STL.begin(), STL.end(), porownaj);		//posortowanie osobnikow wzgledem przystosowania
+		
+		//losowanie punktow podzialu a nastepnie krzyzowanie polegajace na wymianie fragmentow
+		
 		i1 = (rand() % WIELKOSCP);
-		i2 = (rand() % WIELKOSCP);
+		i2 = (rand() % WIELKOSCP);			
 		pktp1 = (rand() % 20 + 2);
 		pktp2 = (rand() % 20 + 2);
 		if (pktp1 >= pktp2) {
