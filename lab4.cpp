@@ -120,6 +120,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		STL2[WIELKOSCP - 1] = o2;
 		swap(STL, STL2);
 	}
+	
 	cout << rzeczywista(STL[0])<<endl;
 	cout << "przystosowanie: " << STL[0].przystosowanie << endl;
 	system("pause");
